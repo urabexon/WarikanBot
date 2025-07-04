@@ -3,6 +3,8 @@ package repository
 import (
 	"database/sql"
 	"errors"
+
+	"github.com/mattn/go-sqlite3"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/urabexon/WarikanBot/internal/domain/entity"
 	"github.com/urabexon/WarikanBot/internal/domain/valueobject"

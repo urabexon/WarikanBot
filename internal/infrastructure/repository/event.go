@@ -2,6 +2,7 @@ package repository
 
 import (
 	"database/sql"
+
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/urabexon/WarikanBot/internal/domain/entity"
 )
