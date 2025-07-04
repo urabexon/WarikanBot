@@ -130,7 +130,47 @@ func buildSettlementMessage(settlement *usecase.Settlement) slack.MsgOption {
 }
 
 func buildHelpMessage() slack.MsgOption {
-
+	return slack.MsgOptionBlocks(
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", "*Slackで割り勘の計算ができます* :tada:\n支払いの集計はチャンネルごとに行われるので、イベント用のチャンネルで使ってください！", false, false),
+			nil,
+			nil,
+		),
+		slack.NewDividerBlock(),
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", ":receipt: *立替え登録*", false, false),
+			[]*slack.TextBlockObject{
+				slack.NewTextBlockObject("mrkdwn", "*登録する*\n`/warikan [金額]円`", false, false),
+				slack.NewTextBlockObject("mrkdwn", "*取り消す*\n登録メッセージを削除してください", false, false),
+			},
+			nil,
+		),
+		slack.NewDividerBlock(),
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", ":purse: *支払者登録*", false, false),
+			[]*slack.TextBlockObject{
+				slack.NewTextBlockObject("mrkdwn", "*登録する*\n`/warikan join ([重み]%)`", false, false),
+				slack.NewTextBlockObject("mrkdwn", "*取り消す*\n登録メッセージを削除してください", false, false),
+			},
+			nil,
+		),
+		slack.NewDividerBlock(),
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", ":moneybag: *清算*", false, false),
+			[]*slack.TextBlockObject{
+				slack.NewTextBlockObject("mrkdwn", "*清算する*\n`/warikan settle`", false, false),
+			},
+			nil,
+		),
+		slack.NewDividerBlock(),
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", ":beginner: *ヘルプ*", false, false),
+			[]*slack.TextBlockObject{
+				slack.NewTextBlockObject("mrkdwn", "*この使い方を表示する*\n`/warikan help`", false, false),
+			},
+			nil,
+		),
+	)
 }
 
 func buildInvalidCommandMessage(userID string) slack.MsgOption {
