@@ -36,7 +36,10 @@ func parsePercent(text string) (valueobject.Percent, error) {
 }
 
 func botProfiles() slack.MsgOption {
-
+	return slack.MsgOptionCompose(
+		slack.MsgOptionIconEmoji(":money_with_wings:"),
+		slack.MsgOptionUsername("割り勘"),
+	)
 }
 
 func buildPaymentCreatedMessage(userID string, amount valueobject.Yen) slack.MsgOption {
