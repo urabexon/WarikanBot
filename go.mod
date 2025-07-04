@@ -12,6 +12,7 @@ require (
 	github.com/go-test/deep v1.0.4 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/mattn/go-sqlite3 v1.14.28 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/slack-go/slack v0.16.0 // indirect

@@ -5,10 +5,17 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/urabexon/WarikanBot/internal/infrastructure/handler"
 	"github.com/urabexon/WarikanBot/internal/infrastructure/repository"
 	"github.com/urabexon/WarikanBot/internal/usecase"
 )
+
+func init() {
+	if err := godotenv.Load(); err != nil {
+		log.Println(".env ファイルが見つかりませんでした。")
+	}
+}
 
 func main() {
 	eventRepository, err := repository.NewEventRepository("database.db")
