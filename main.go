@@ -26,6 +26,9 @@ func main() {
 		log.Fatalf("Failed to create payment repository: %v", err)
 	}
 
-	paymentUsecase := usecase.NewPaymentUsecase(eventRepository, payerRepository, paymentRepository)
+	paymentUsecase := usecase.NewPayment(eventRepository, payerRepository, paymentRepository)
+	slackCommandHandler := handler.NewSlackCommandHandler(os.Getenv("SLACK_BOT_TOKEN"), os.Getenv("SLACK_SIGNING_SECRET"), paymentUsecase)
+	slackEventHandler := handler.NewSlackEventHandler(os.Getenv("SLACK_BOT_TOKEN"), os.Getenv("SLACK_SIGNING_SECRET"), paymentUsecase)
 
+	log.Println("Starting server on 0.0.0.0:5272")
 }
