@@ -5,9 +5,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/urabexon/WarikanBot/internal/domain/entity"
-	"github.com/urabexon/WarikanBot/internal/domain/valueobject"
 	"github.com/slack-go/slack"
+	"github.com/urabexon/WarikanBot/internal/domain/valueobject"
+	"github.com/urabexon/WarikanBot/internal/usecase"
 )
 
 func parseYen(text string) (valueobject.Yen, error) {
