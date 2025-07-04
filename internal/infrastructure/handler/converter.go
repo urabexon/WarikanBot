@@ -82,7 +82,51 @@ func buildSettlementMessage(settlement *usecase.Settlement) slack.MsgOption {
 		),
 	}
 	payerAmountFields := []*slack.TextBlockObject{}
-	
+	for payerID, amount := range settlement.AmountsAdvanced {
+		payerAmountFields = append(payerAmountFields,
+			slack.NewTextBlockObject("mrkdwn", fmt.Sprintf("<@%s> %s", payerID.String(), amount.String()), false, false),
+		)
+	}
+	payerFields := []*slack.TextBlockObject{}
+	for _, payer := range settlement.Payers {
+		payerFields = append(payerFields,
+			slack.NewTextBlockObject("mrkdwn", fmt.Sprintf("<@%s> %d%%", payer.ID.String(), payer.Weight.Int()), false, false),
+		)
+	}
+	blocks = append(blocks,
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", fmt.Sprintf(":receipt: 合計%sが立て替えられています", settlement.Total.String()), false, false),
+			payerAmountFields,
+			nil,
+		),
+		slack.NewDividerBlock(),
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", fmt.Sprintf(":purse: %d人で割り勘します", len(settlement.Payers)), false, false),
+			payerFields,
+			nil,
+		),
+		slack.NewDividerBlock(),
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", ":money_with_wings: 次のように清算してください", false, false),
+			nil,
+			nil,
+		),
+	)
+	for _, instruction := range settlement.Instructions {
+		blocks = append(blocks,
+			slack.NewSectionBlock(
+				slack.NewTextBlockObject(
+					"mrkdwn",
+					fmt.Sprintf("<@%s> → %s → <@%s>", instruction.From.String(), instruction.Amount.String(), instruction.To.String()),
+					false,
+					false,
+				),
+				nil,
+				nil,
+			),
+		)
+	}
+	return slack.MsgOptionBlocks(blocks...)
 }
 
 func buildHelpMessage() slack.MsgOption {
