@@ -11,11 +11,28 @@ import (
 )
 
 func parseYen(text string) (valueobject.Yen, error) {
-
+	rawYen := strings.ReplaceAll(text, ",", "")
+	amount, err := strconv.Atoi(rawYen)
+	if err != nil {
+		return valueobject.Yen(0), fmt.Errorf("failed to parse amount: %w", err)
+	}
+	yen, err := valueobject.NewYen(amount)
+	if err != nil {
+		return valueobject.Yen(0), err
+	}
+	return yen, nil
 }
 
 func parsePercent(text string) (valueobject.Percent, error) {
-
+	percent, err := strconv.Atoi(text)
+	if err != nil {
+		return valueobject.Percent(0), fmt.Errorf("failed to parse percent: %w", err)
+	}
+	percentValue, err := valueobject.NewPercent(percent)
+	if err != nil {
+		return valueobject.Percent(0), err
+	}
+	return percentValue, nil
 }
 
 func botProfiles() slack.MsgOption {
