@@ -24,4 +24,19 @@ go.work.sum
 # SQLite
 *.db
 
+# Claude IDE
+CLAUDE.md
+
+# VSCode IDE
+.DS_Store
+.vscode/
+
+# JetBrains IDE
+.idea/
+
+# Cursor IDE
+.cursor/
+CLAUDE.md
+
+# GitHub Actions
 !.github/
