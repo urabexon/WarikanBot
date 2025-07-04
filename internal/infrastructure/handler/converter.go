@@ -174,5 +174,14 @@ func buildHelpMessage() slack.MsgOption {
 }
 
 func buildInvalidCommandMessage(userID string) slack.MsgOption {
-
+	return slack.MsgOptionCompose(
+		slack.MsgOptionBlocks(
+			slack.NewSectionBlock(
+				slack.NewTextBlockObject("mrkdwn", "無効なコマンドです...\n使い方は `/warikan help` をご覧ください！", false, false),
+				nil,
+				nil,
+			),
+		),
+		slack.MsgOptionPostEphemeral(userID),
+	)
 }
