@@ -43,19 +43,46 @@ func botProfiles() slack.MsgOption {
 }
 
 func buildPaymentCreatedMessage(userID string, amount valueobject.Yen) slack.MsgOption {
-
+	return slack.MsgOptionBlocks(
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", fmt.Sprintf(":receipt: <@%s>さんが%s立て替えました！", userID, amount.String()), false, false),
+			nil,
+			nil,
+		),
+	)
 }
 
 func buildPayerJoinedMessage(userID string) slack.MsgOption {
-
+	return slack.MsgOptionBlocks(
+		slack.NewSectionBlock(
+			slack.NewTextBlockObject("mrkdwn", fmt.Sprintf(":purse: <@%s>さんが割り勘に参加します！", userID), false, false),
+			nil,
+			nil,
+		),
+	)
 }
 
 func buildPayerAlreadyJoinedMessage(userID string) slack.MsgOption {
-
+	return slack.MsgOptionCompose(
+		slack.MsgOptionBlocks(
+			slack.NewSectionBlock(
+				slack.NewTextBlockObject("mrkdwn", fmt.Sprintf(":warning: <@%s>さんはすでに割り勘に参加しています！", userID), false, false),
+				nil,
+				nil,
+			),
+		),
+		slack.MsgOptionPostEphemeral(userID),
+	)
 }
 
 func buildSettlementMessage(settlement *usecase.Settlement) slack.MsgOption {
-
+	blocks := []slack.Block{
+		slack.NewHeaderBlock(
+			slack.NewTextBlockObject("plain_text", ":moneybag: 集計結果", false, false),
+		),
+	}
+	payerAmountFields := []*slack.TextBlockObject{}
+	
 }
 
 func buildHelpMessage() slack.MsgOption {
